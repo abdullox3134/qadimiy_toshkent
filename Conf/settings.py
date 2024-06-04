@@ -263,14 +263,18 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 
 CORS_ALLOWED_ORIGINS = [
     "https://qadimiytoshkent.uz",
+    "http://qadimiytoshkent.uz",
     "https://new.qadimiytoshkent.uz",
+    "http://new.qadimiytoshkent.uz",
     "http://localhost:8080",
     "http://127.0.0.1:9000",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://qadimiytoshkent.uz',
+    'http://qadimiytoshkent.uz',
     'https://new.qadimiytoshkent.uz',
+    'http://new.qadimiytoshkent.uz',
 ]
 
 
