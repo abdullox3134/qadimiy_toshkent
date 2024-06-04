@@ -69,13 +69,13 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # CORS middleware
+    'corsheaders.middleware.CorsMiddleware',  # CORS middleware should be before CommonMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',  # Add this line if missing
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 
@@ -265,18 +265,14 @@ JAZZMIN_UI_TWEAKS = {
 
 AUTH_USER_MODEL = "users.CustomUser"
 
-# Correcting the typo in CORS settings
+# Enable CORS for all domains for testing purposes
 CORS_ORIGIN_ALLOW_ALL = True
 
-# If you want to allow specific origins, comment the above line and uncomment below lines
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",
-#     "https://yourdomain.com",
-# ]
 
+# CSRF trusted origins
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
-    "https://yourdomain.com",
+    "https://new.qadimiytoshkent.uz/",
 ]
 
 CKEDITOR_CONFIGS = {
