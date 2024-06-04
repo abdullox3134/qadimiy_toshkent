@@ -1,4 +1,3 @@
-
 """
 Django settings for Conf project.
 
@@ -13,11 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
-
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -30,13 +28,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
     'jazzmin',
 
-     # lacol
+    # lacol
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,7 +48,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'modeltranslation',
     'archaeology.apps.ArchaeologyConfig',
-    
+
     # django apps
     'allauth',
     'allauth.account',
@@ -70,16 +67,14 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',  # Add this line if missing
-    'corsheaders.middleware.CorsMiddleware',
-
+    'allauth.account.middleware.AccountMiddleware',
 ]
-
 
 GOOGLE_REDIRECT_URL = 'https://example.com/accounts/google/login/callback/'  # or your actual callback URL
 REST_AUTH_REGISTER_SERIALIZERS = {
@@ -120,7 +115,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS':
-    'rest_framework.pagination.PageNumberPagination',
+        'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 25,
 
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
@@ -144,7 +139,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Conf.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -154,7 +148,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -174,7 +167,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -192,14 +184,20 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Media files (uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 JAZZMIN_SETTINGS = {
     "site_title": "Foydali Havolalar",
@@ -219,8 +217,6 @@ JAZZMIN_SETTINGS = {
     "show_ui_builder": True,
 
     "changeform_format": "collapsible",
-
-   
 
 }
 
@@ -259,15 +255,23 @@ JAZZMIN_UI_TWEAKS = {
 
 AUTH_USER_MODEL = "users.CustomUser"
 
-CROS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = True
 
-#? pip install phonenumbers
-#? pip install django-phonenumber-field  KERAK BOLIB QOLADI!
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'language-code',
+]
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CORS_ALLOWED_ORIGINS = [
+    "https://qadimiytoshkent.uz",
+    "https://new.qadimiytoshkent.uz",
+    "http://localhost:8080",
+    "http://127.0.0.1:9000",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://qadimiytoshkent.uz',
+    'https://new.qadimiytoshkent.uz',
+]
 
 
 CKEDITOR_CONFIGS = {
