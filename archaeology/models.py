@@ -22,7 +22,7 @@ class Archaeology(models.Model):
     title = models.CharField(max_length=60, blank=True, null=True)
     context = RichTextField(blank=True, null=True)
     like = models.IntegerField(default=0, blank=True, null=True)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE, related_name='region')
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, related_name='region',blank=True, null=True)
     password_image = models.FileField(upload_to='image', blank=True, null=True)
     downloads = models.IntegerField(default=0, blank=True, null=True)
     users = models.ManyToManyField(User, related_name='liked_kanferensiyalar', blank=True)
@@ -32,7 +32,7 @@ class Archaeology(models.Model):
 
     class Meta:
         verbose_name = 'Archaeology'
-        verbose_name_plural = 'Archaeologys'
+        verbose_name_plural = 'Archaeology'
 
     def __str__(self):
         return self.title or ''
@@ -42,14 +42,16 @@ class ArchaeologyVideo(models.Model):
     video = models.FileField(upload_to='video', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
     title = models.CharField(max_length=60)
-    name = models.ForeignKey(Archaeology, on_delete=models.CASCADE, related_name='archaeologyVideo')
+    name = models.ForeignKey(Archaeology, on_delete=models.CASCADE, related_name='archaeologyVideo'
+                             ,blank=True, null=True)
 
 
 class ArchaeologyPicture(models.Model):
-    image = models.ImageField(upload_to='images')
+    image = models.FileField(upload_to='image', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
     title = models.CharField(max_length=60)
-    name = models.ForeignKey(Archaeology, on_delete=models.CASCADE, related_name='archaeologyPicture')
+    name = models.ForeignKey(Archaeology, on_delete=models.CASCADE, related_name='archaeologyPicture',
+                             blank=True, null=True)
 
 
 class Items(models.Model):
@@ -75,14 +77,14 @@ class ItemsVideo(models.Model):
     video = models.FileField(upload_to='video', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
     title = models.CharField(max_length=60)
-    items = models.ForeignKey(Items, on_delete=models.CASCADE, related_name='picture_items')
+    item = models.ForeignKey(Items, on_delete=models.CASCADE, related_name='video_items')
 
 
 class ItemsPicture(models.Model):
-    image = models.ImageField(upload_to='images')
+    image = models.FileField(upload_to='image', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
     title = models.CharField(max_length=60)
-    items = models.ForeignKey(Items, on_delete=models.CASCADE, related_name='video_items')
+    item = models.ForeignKey(Items, on_delete=models.CASCADE, related_name='picture_items')
 
 
 class News(models.Model):
@@ -103,14 +105,14 @@ class NewsVideo(models.Model):
     video = models.FileField(upload_to='video', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
     title = models.CharField(max_length=60)
-    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_video')
+    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_video',)
 
 
 class NewsPicture(models.Model):
-    image = models.ImageField(upload_to='images')
+    image = models.FileField(upload_to='image', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
     title = models.CharField(max_length=60)
-    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_picture')
+    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_picture',)
 
 
 class Video(models.Model):
@@ -118,7 +120,7 @@ class Video(models.Model):
 
     class Meta:
         verbose_name = 'Video'
-        verbose_name_plural = 'Videos'
+        verbose_name_plural = 'Video'
 
     def __str__(self):
         return self.title or ''
@@ -127,7 +129,7 @@ class Video(models.Model):
 class SubVideo(models.Model):
     video = models.FileField(upload_to='video', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
-    videos = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='video_sub')
+    videos = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='sub_video',)
 
 
 class Picture(models.Model):
@@ -135,13 +137,13 @@ class Picture(models.Model):
 
     class Meta:
         verbose_name = 'Picture'
-        verbose_name_plural = 'Pictures'
+        verbose_name_plural = 'Picture'
 
     def __str__(self):
         return self.title or ''
 
 
 class SubPicture(models.Model):
-    image = models.ImageField(upload_to='images')
+    image = models.FileField(upload_to='image', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
-    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, related_name='picture_sub')
+    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, related_name='sub_picture',)

@@ -90,7 +90,7 @@ class ArchaeologyLikeAPIView(RetrieveUpdateAPIView):
 @api_view(['GET'])
 def items_list(request):
     paginator = PageNumberPagination()
-    paginator.page_size = 1
+    paginator.page_size = 20
     comments = Items.objects.all().order_by("id")
     user_filter = CategoryFilter(request.GET, queryset=comments)
     result_page = paginator.paginate_queryset(user_filter.qs, request)
@@ -147,7 +147,16 @@ class ItemsLikeAPIView(RetrieveUpdateAPIView):
 def news_list(request):
     comments = News.objects.all().order_by("id")
     serializer = NewsSerializers(comments, many=True)
-    return Response(serializer.data)
+    serializer_url = serializer.data
+    for obj_url in serializer_url:
+        for obj in obj_url['news_picture']:
+            if obj.get('image'):
+                obj['image'] = request.build_absolute_uri(obj['image'])
+        for obj in obj_url['news_video']:
+            if obj.get('video'):
+                obj['video'] = request.build_absolute_uri(obj['video'])
+
+    return Response(serializer_url)
 
 
 @api_view(['GET'])
@@ -165,6 +174,12 @@ def news_detail(request, pk):
 def video_list(request):
     comments = Video.objects.all().order_by("id")
     serializer = VideoSerializers(comments, many=True)
+    serializer_url = serializer.data
+    for obj_url in serializer_url:
+        for obj in obj_url['sub_video']:
+            if obj.get('video'):
+                obj['video'] = request.build_absolute_uri(obj['video'])
+
     return Response(serializer.data)
 
 
@@ -183,6 +198,11 @@ def video_detail(request, pk):
 def picture_list(request):
     comments = Picture.objects.all().order_by("id")
     serializer = PictureSerializers(comments, many=True)
+    serializer_url = serializer.data
+    for obj_url in serializer_url:
+        for obj in obj_url['sub_picture']:
+            if obj.get('image'):
+                obj['image'] = request.build_absolute_uri(obj['image'])
     return Response(serializer.data)
 
 
