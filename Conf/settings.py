@@ -1,4 +1,3 @@
-
 """
 Django settings for Conf project.
 
@@ -51,7 +50,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'modeltranslation',
     'archaeology.apps.ArchaeologyConfig',
-    
+
     # django apps
     'allauth',
     'allauth.account',
@@ -70,14 +69,13 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CORS middleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',  # Add this line if missing
-    'corsheaders.middleware.CorsMiddleware',
-
 ]
 
 
@@ -120,7 +118,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS':
-    'rest_framework.pagination.PageNumberPagination',
+        'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 25,
 
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
@@ -195,6 +193,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Media files (uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -220,7 +226,7 @@ JAZZMIN_SETTINGS = {
 
     "changeform_format": "collapsible",
 
-   
+
 
 }
 
@@ -259,16 +265,19 @@ JAZZMIN_UI_TWEAKS = {
 
 AUTH_USER_MODEL = "users.CustomUser"
 
-CROS_ORIGIN_ALLOW_ALL = True
+# Correcting the typo in CORS settings
+CORS_ORIGIN_ALLOW_ALL = True
 
-#? pip install phonenumbers
-#? pip install django-phonenumber-field  KERAK BOLIB QOLADI!
+# If you want to allow specific origins, comment the above line and uncomment below lines
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "https://yourdomain.com",
+# ]
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "https://yourdomain.com",
+]
 
 CKEDITOR_CONFIGS = {
     'default': {
