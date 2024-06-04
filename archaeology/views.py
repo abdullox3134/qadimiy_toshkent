@@ -4,13 +4,12 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from rest_framework.generics import RetrieveUpdateAPIView
-from .models import Archaeology, Region, Items, News, Video, Picture
-from .serializers import (ArchaeologySerializers, RegionSerializers, ItemsSerializers, NewsSerializers,
-                          VideoSerializers, PictureSerializers, ArchaeologyLikeSerializer, ItemsLikeSerializer)
-
+from models import Archaeology, Region, Items, News, Video, Picture
+from serializers import (ArchaeologySerializers, RegionSerializers, ItemsSerializers, NewsSerializers,
+                        VideoSerializers, PictureSerializers, ArchaeologyLikeSerializer, ItemsLikeSerializer)
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from .filters import CategoryFilter
+from filters import CategoryFilter
 
 
 @api_view(['GET'])
