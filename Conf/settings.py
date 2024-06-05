@@ -255,27 +255,26 @@ JAZZMIN_UI_TWEAKS = {
 
 AUTH_USER_MODEL = "users.CustomUser"
 
-CORS_ORIGIN_ALLOW_ALL = True
-
-CORS_ALLOW_HEADERS = list(default_headers) + [
-    'language-code',
-]
-
-CORS_ALLOWED_ORIGINS = [
-    "https://qadimiytoshkent.uz",
-    "http://qadimiytoshkent.uz",
-    "https://new.qadimiytoshkent.uz",
-    "http://new.qadimiytoshkent.uz",
-    "http://localhost:8080",
-    "http://127.0.0.1:9000",
-]
-
-CSRF_TRUSTED_ORIGINS = [
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'https://localhost:3000',
+    'http://localhost:3000',
+    'https://localhost:8080',
+    'http://localhost:8080',
+    'https://localhost:8000',
+    'http://localhost:8000',
     'https://qadimiytoshkent.uz',
     'http://qadimiytoshkent.uz',
     'https://new.qadimiytoshkent.uz',
     'http://new.qadimiytoshkent.uz',
 ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://new.qadimiytoshkent.uz',
+    'https://new.qadimiytoshkent.uz',
+    'https://qadimiytoshkent.uz',
+]
+
 
 
 CKEDITOR_CONFIGS = {
