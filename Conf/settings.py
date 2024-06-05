@@ -202,7 +202,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 JAZZMIN_SETTINGS = {
     "site_title": "Foydali Havolalar",
     "site_brand": "Fanlar Akademiyasi",
-    "site_logo": "Бабочка.jpg",
+    "site_logo": "tosh.jpeg",
     "welcome_sign": "Xush Kelibsiz",
     "copyright": "Archaeology",
 
