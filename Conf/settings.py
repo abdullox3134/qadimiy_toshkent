@@ -271,8 +271,9 @@ CORS_ORIGIN_WHITELIST = [
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://new.qadimiytoshkent.uz',
-    'https://new.qadimiytoshkent.uz',
+    'http://new.qadimiytoshkent.uz',
     'https://qadimiytoshkent.uz',
+    'http://qadimiytoshkent.uz',
 ]
 
 
