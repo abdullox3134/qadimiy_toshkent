@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # django apps
 
+    # django apps
+    'corsheaders',
     'rest_framework',
     'drf_yasg',
     'rest_framework_simplejwt',
@@ -52,7 +53,6 @@ INSTALLED_APPS = [
     # django apps
     'allauth',
     'allauth.account',
-    'corsheaders',
     'ckeditor',
     'django_filters',
 
@@ -258,24 +258,16 @@ AUTH_USER_MODEL = "users.CustomUser"
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = [
-    'https://localhost:3000',
     'http://localhost:3000',
-    'https://localhost:8080',
     'http://localhost:8080',
-    'https://localhost:8000',
     'http://localhost:8000',
-    'https://qadimiytoshkent.uz',
     'http://qadimiytoshkent.uz',
-    'https://new.qadimiytoshkent.uz',
     'http://new.qadimiytoshkent.uz',
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://new.qadimiytoshkent.uz',
     'http://new.qadimiytoshkent.uz',
-    'https://qadimiytoshkent.uz',
     'http://qadimiytoshkent.uz',
 ]
-
 
 
 CKEDITOR_CONFIGS = {
