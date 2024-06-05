@@ -1,15 +1,17 @@
 from django.http import Http404
 from rest_framework.decorators import api_view
+from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
-from rest_framework.generics import RetrieveUpdateAPIView
-from models import Archaeology, Region, Items, News, Video, Picture
-from serializers import (ArchaeologySerializers, RegionSerializers, ItemsSerializers, NewsSerializers,
-                        VideoSerializers, PictureSerializers, ArchaeologyLikeSerializer, ItemsLikeSerializer)
+
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from filters import CategoryFilter
+
+from archaeology.filters import CategoryFilter
+from archaeology.models import Region, Archaeology, Items, News, Video, Picture
+from archaeology.serializers import RegionSerializers, ArchaeologySerializers, ArchaeologyLikeSerializer, \
+    ItemsSerializers, ItemsLikeSerializer, NewsSerializers, VideoSerializers, PictureSerializers
 
 
 @api_view(['GET'])
