@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     # django apps
     'rest_framework',
     'drf_yasg',
-    'corsheaders',
+    # 'corsheaders',
     'rest_framework_simplejwt',
     'modeltranslation',
     'archaeology.apps.ArchaeologyConfig',
@@ -67,7 +67,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -255,7 +255,7 @@ JAZZMIN_UI_TWEAKS = {
 
 AUTH_USER_MODEL = "users.CustomUser"
 
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ALLOW_CREDENTIALS = True
 # CORS_ORIGIN_WHITELIST = [
 #     'http://localhost:3000',
