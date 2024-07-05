@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     # django apps
     'rest_framework',
     'drf_yasg',
-    # 'corsheaders',
+    'corsheaders',
     'rest_framework_simplejwt',
     'modeltranslation',
     'archaeology.apps.ArchaeologyConfig',
@@ -142,10 +142,22 @@ WSGI_APPLICATION = 'Conf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'toshkent',
+        'USER': 'toshkent_user',
+        'PASSWORD': 'toshkent_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -255,19 +267,11 @@ JAZZMIN_UI_TWEAKS = {
 
 AUTH_USER_MODEL = "users.CustomUser"
 
-# CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:3000',
-#     'http://localhost:8080',
-#     'http://localhost:8000',
-#     'http://qadimiytoshkent.uz',
-#     'http://new.qadimiytoshkent.uz',
-# ]
-# CSRF_TRUSTED_ORIGINS = [
-#     'http://new.qadimiytoshkent.uz',
-#     'http://qadimiytoshkent.uz',
-# ]
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'language-code',
+]
 
 
 CKEDITOR_CONFIGS = {
