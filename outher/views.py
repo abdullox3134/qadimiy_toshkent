@@ -1,15 +1,12 @@
 from rest_framework import filters
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListAPIView, get_object_or_404, RetrieveUpdateAPIView
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
-
-from outher.models import About, Scientists, ElectronicBooks, Address
-from outher.serializer import AboutSerializer, ScientistsSerializer, ElectronicBooksSerializer, ContactSerializer, \
-    AddressSerializer, ElectronicBooksLikeSerializer
+from outher.models import About, Muzeylar, Kutubxona, Olimlar
+from outher.serializer import AboutSerializer, MuzeylarSerializer, KutubxonaSerializer, OlimlarSerializer
 
 
 @api_view(['GET'])
@@ -19,128 +16,66 @@ def about_list(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
-def about_detail(request, pk):
-    try:
-        about = About.objects.get(pk=pk)
-    except About.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    serializer = AboutSerializer(about)
-    return Response(serializer.data)
-
-
-class ScientistListAPIView(ListAPIView):
-    queryset = Scientists.objects.all().order_by("id")
-    serializer_class = ScientistsSerializer
+class OlimlarListAPIView(ListAPIView):
+    queryset = Olimlar.objects.all().order_by("id")
+    serializer_class = OlimlarSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
 
 
-@api_view(['GET'])
-def scientist_detail(request, pk):
-    try:
-        scientist = Scientists.objects.get(pk=pk)
-    except Scientists.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    serializer = ScientistsSerializer(scientist)
-    return Response(serializer.data)
-
-
-class ElectronicListAPIView(ListAPIView):
-    queryset = ElectronicBooks.objects.all().order_by("id")
-    serializer_class = ElectronicBooksSerializer
+class KutubxonaListAPIView(ListAPIView):
+    queryset = Kutubxona.objects.all().order_by("id")
+    serializer_class = KutubxonaSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name', 'file_books__title']
+    search_fields = ['title']
     permission_classes = [IsAuthenticated, ]
 
 
 @api_view(['GET'])
-def electronic_books_detail(request, pk):
+def kutubxona_detail(request, pk):
     try:
-        ebook = ElectronicBooks.objects.get(pk=pk)
-    except ElectronicBooks.DoesNotExist:
+        kitob = Kutubxona.objects.get(pk=pk)
+    except Kutubxona.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    serializer = ElectronicBooksSerializer(ebook)
-    return Response(serializer.data)
+    serializer = KutubxonaSerializer(kitob)
+    serializer_data = serializer.data
+
+    if serializer_data.get('image'):
+        serializer_data['image'] = request.build_absolute_uri(serializer_data['image'])
+    if serializer_data.get('file'):
+        serializer_data['file'] = request.build_absolute_uri(serializer_data['file'])
+
+    return Response(serializer_data)
+
+@api_view(['GET'])
+def muzeylar_list(request):
+    muzeylar = Muzeylar.objects.all().order_by("id")
+    serializer = MuzeylarSerializer(muzeylar, many=True)
+    serializer_data = serializer.data
+
+    for obj in serializer_data:
+        if obj.get('image'):
+            obj['image'] = request.build_absolute_uri(obj['image'])
+        if obj.get('video'):
+            obj['video'] = request.build_absolute_uri(obj['video'])
+
+    return Response(serializer_data)
 
 
-class ElectronicListLikeAPIView(RetrieveUpdateAPIView):
-    queryset = ElectronicBooks.objects.all().order_by("id")
-    serializer_class = ElectronicBooksLikeSerializer
-
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        user = request.user
-
-        if user.is_authenticated:
-            existing_like = instance.liked_users.filter(id=user.id).exists()
-            if not existing_like:
-                instance.liked_users.add(user)
-                instance.like += 1
-            else:
-                instance.liked_users.remove(user)
-                instance.like -= 1
-            instance.save()
-            serializer = self.get_serializer(instance)
-            return Response(serializer.data)
-        else:
-            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
-
-    def get_object(self):
-        pk = self.kwargs.get('pk')
-        return get_object_or_404(ElectronicBooks, pk=pk)
-
-
-class ContactListCreateView(APIView):
-
-    def post(self, request):
-        serializer = ContactSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-@api_view(['GET', 'POST'])
-def address_list_create(request):
-    if request.method == 'GET':
-        addresses = Address.objects.all()
-        serializer = AddressSerializer(addresses, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    elif request.method == 'POST':
-        serializer = AddressSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['PUT'])
-def address_edit(request, pk):
+@api_view(['GET'])
+def muzeylar_detail(request, pk):
     try:
-        address = Address.objects.get(pk=pk)
-    except Address.DoesNotExist:
-        return Response({"error": "Address not found"}, status=status.HTTP_404_NOT_FOUND)
+        muzey = Muzeylar.objects.get(pk=pk)
+    except Muzeylar.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'PUT':
-        serializer = AddressSerializer(address, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    serializer = MuzeylarSerializer(muzey)
+    serializer_data = serializer.data
 
+    if serializer_data.get('image'):
+        serializer_data['image'] = request.build_absolute_uri(serializer_data['image'])
+    if serializer_data.get('video'):
+        serializer_data['video'] = request.build_absolute_uri(serializer_data['video'])
 
-
-
-
-
-
-
-
-
-
-
-
+    return Response(serializer_data)
