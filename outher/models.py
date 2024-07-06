@@ -12,7 +12,6 @@ class Olimlar(models.Model):
     image = models.FileField(upload_to='image/')
 
 
-
 class Kutubxona(models.Model):
     title = models.CharField(max_length=150, blank=True, null=True)
     image = models.ImageField(upload_to='image/', blank=True, null=True)
@@ -28,4 +27,3 @@ class Muzeylar(models.Model):
 
     def __str__(self):
         return self.title
-

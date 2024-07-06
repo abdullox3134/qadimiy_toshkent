@@ -27,5 +27,3 @@ class FileDownload(APIView):
             return Response(response, status=status.HTTP_200_OK)
         else:
             raise ValidationError("No file associated with this FileBook instance.")
-
-
