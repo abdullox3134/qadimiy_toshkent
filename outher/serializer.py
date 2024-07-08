@@ -24,4 +24,4 @@ class KutubxonaSerializer(serializers.ModelSerializer):
 class MuzeylarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Muzeylar
-        fields = ['id', 'title_uz', 'title_en', 'image', 'video', 'link']
+        fields = ['id', 'title_uz', 'title_en', 'image', 'video', 'video_link', 'link']

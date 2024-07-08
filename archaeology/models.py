@@ -5,19 +5,6 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-# class Region(models.Model):
-#     title = models.CharField(max_length=60)
-#     longitude = models.FloatField()
-#     latitude = models.FloatField()
-#
-#     class Meta:
-#         verbose_name = 'Region'
-#         verbose_name_plural = 'Regions'
-#
-#     def __str__(self):
-#         return self.title or ''
-
-
 class Archaeology(models.Model):
     title = models.CharField(max_length=60)
     context = RichTextField(blank=True, null=True)
@@ -38,14 +25,6 @@ class Archaeology(models.Model):
 
     def __str__(self):
         return self.title
-
-
-# class ArchaeologyVideo(models.Model):
-#     video = models.FileField(upload_to='video', blank=True, null=True)
-#     link = models.URLField(verbose_name='link', blank=True, null=True)
-#     title = models.CharField(max_length=60)
-#     name = models.ForeignKey(Archaeology, on_delete=models.CASCADE, related_name='archaeologyVideo'
-#                              ,blank=True, null=True)
 
 
 class ArchaeologyPicture(models.Model):
@@ -102,47 +81,7 @@ class News(models.Model):
         return self.title or ''
 
 
-# class NewsVideo(models.Model):
-#     video = models.FileField(upload_to='video', blank=True, null=True)
-#     link = models.URLField(verbose_name='link', blank=True, null=True)
-#     news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_video',)
-
-
 class NewsPicture(models.Model):
     image = models.FileField(upload_to='image', blank=True, null=True)
     # link = models.URLField(verbose_name='link', blank=True, null=True)
-    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_picture',)
-
-
-# class Video(models.Model):
-#     title = models.CharField(max_length=60)
-#
-#     class Meta:
-#         verbose_name = 'Video'
-#         verbose_name_plural = 'Video'
-#
-#     def __str__(self):
-#         return self.title or ''
-
-
-# class SubVideo(models.Model):
-#     video = models.FileField(upload_to='video', blank=True, null=True)
-#     link = models.URLField(verbose_name='link', blank=True, null=True)
-#     videos = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='sub_video',)
-
-
-# class Picture(models.Model):
-#     title = models.CharField(max_length=60)
-#
-#     class Meta:
-#         verbose_name = 'Picture'
-#         verbose_name_plural = 'Picture'
-#
-#     def __str__(self):
-#         return self.title or ''
-
-
-# class SubPicture(models.Model):
-#     image = models.FileField(upload_to='image', blank=True, null=True)
-#     link = models.URLField(verbose_name='link', blank=True, null=True)
-#     picture = models.ForeignKey(Picture, on_delete=models.CASCADE, related_name='sub_picture',)
+    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_picture', )

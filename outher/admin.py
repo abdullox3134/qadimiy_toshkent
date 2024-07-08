@@ -17,7 +17,7 @@ class OlimlarAdmin(admin.ModelAdmin):
 @admin.register(Muzeylar)
 class MuzeylarAdmin(admin.ModelAdmin):
     list_display = ('title',)
-    fields = ('title_uz', 'title_en', 'image', 'video', 'link',)
+    fields = ('title_uz', 'title_en', 'image', 'video', 'video_link', 'link',)
 
 
 @admin.register(Kutubxona)
