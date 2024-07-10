@@ -10,7 +10,6 @@ class ArchaeologyPictureSerializer(serializers.ModelSerializer):
 
 
 class ArchaeologySerializers(serializers.ModelSerializer):
-    # archaeologyVideo = serializers.SerializerMethodField()
     archaeologyPicture = serializers.SerializerMethodField()
 
     class Meta:
@@ -35,8 +34,6 @@ class ItemsPictureSerializer(serializers.ModelSerializer):
 
 class ItemsSerializers(serializers.ModelSerializer):
     picture_items = serializers.SerializerMethodField()
-
-    # video_items = serializers.SerializerMethodField()
 
     class Meta:
         model = Items

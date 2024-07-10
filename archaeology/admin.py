@@ -57,33 +57,3 @@ class ArchaeologyAdmin(admin.ModelAdmin):
     inlines = [Archaeology_Picture]
     fields = ('context_uz', 'context_en', 'title_uz', 'title_en', 'video', 'link',)
 
-
-# class SubVideoTabularInline(admin.TabularInline):
-#     model = SubVideo
-#     fields = ['videos', 'link', 'video']
-
-
-# @admin.register(Video)
-# class VideoAdmin(admin.ModelAdmin):
-#     list_display = ('title',)
-#     inlines = [SubVideoTabularInline]
-#     fields = ('title_uz', 'title_en')
-
-
-# class SubPictureTabularInline(admin.TabularInline):
-#     model = SubPicture
-#     fields = ['picture', 'link', 'image']
-
-
-# @admin.register(Picture)
-# class PictureAdmin(admin.ModelAdmin):
-#     list_display = ('title',)
-#     inlines = [SubPictureTabularInline]
-#     fields = ('title_uz', 'title_en')
-
-# @admin.register(Region)
-# class RegionAdmin(admin.ModelAdmin):
-#     list_display = ('title',)
-#     fields = ('title_uz', 'title_en', 'longitude', 'latitude')
-
-

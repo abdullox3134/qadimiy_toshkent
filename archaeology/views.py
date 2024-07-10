@@ -1,8 +1,6 @@
-from django.http import Http404
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-
 
 from rest_framework import status
 
@@ -79,12 +77,7 @@ def news_list(request):
         for obj in obj_url['news_picture']:
             if obj.get('image'):
                 obj['image'] = request.build_absolute_uri(obj['image'])
-        # for obj in obj_url['news_video']:
-        #     if obj.get('video'):
-        #         obj['video'] = request.build_absolute_uri(obj['video'])
-
     return Response(serializer_url)
-
 
 
 @api_view(['GET'])
