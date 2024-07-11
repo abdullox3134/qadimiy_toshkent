@@ -14,7 +14,7 @@ class ArchaeologySerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Archaeology
-        fields = ['id', 'title_uz', 'title_en', 'context_uz', 'context_en',
+        fields = ['id', 'title_uz', 'title_en', 'context_uz', 'context_en', 'image',
                   'video', 'link', 'create', 'update', 'archaeologyPicture']
 
     def get_archaeologyPicture(self, obj):
@@ -38,7 +38,7 @@ class ItemsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Items
         fields = ['id',
-                  'title_uz', 'title_en', 'context_uz', 'context_en',
+                  'title_uz', 'title_en', 'context_uz', 'context_en', 'image',
                   'video', 'create', 'update', 'picture_items', ]
 
     def get_picture_items(self, obj):
@@ -61,4 +61,4 @@ class NewsSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = News
-        fields = ('id', 'title_uz', 'title_en', 'context_uz', 'context_en', 'create', 'update', 'news_picture',)
+        fields = ('id', 'title_uz', 'title_en', 'context_uz', 'context_en', 'image', 'create', 'update', 'news_picture',)

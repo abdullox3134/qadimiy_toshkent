@@ -28,6 +28,7 @@ def archaeology_list(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def archaeology_detail(request, pk):
     try:
         archaeology = Archaeology.objects.get(pk=pk)
@@ -42,6 +43,7 @@ def archaeology_detail(request, pk):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def items_list(request):
     paginator = PageNumberPagination()
     paginator.page_size = 20
@@ -57,6 +59,7 @@ def items_list(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def items_detail(request, pk):
     try:
         items = Items.objects.get(pk=pk)
@@ -71,6 +74,7 @@ def items_detail(request, pk):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def news_list(request):
     comments = News.objects.all().order_by("id")
     serializer = NewsSerializers(comments, many=True)
@@ -83,6 +87,7 @@ def news_list(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def news_detail(request, pk):
     try:
         about = News.objects.get(pk=pk)
@@ -99,3 +104,5 @@ def news_detail(request, pk):
                 obj['image'] = request.build_absolute_uri(obj['image'])
 
     return Response(serializer_data)
+
+

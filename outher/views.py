@@ -1,8 +1,8 @@
 from rest_framework import filters
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from outher.models import About, Muzeylar, Kutubxona, Olimlar
@@ -10,6 +10,7 @@ from outher.serializer import AboutSerializer, MuzeylarSerializer, KutubxonaSeri
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def about_list(request):
     abouts = About.objects.all()
     serializer = AboutSerializer(abouts, many=True)
@@ -19,8 +20,9 @@ def about_list(request):
 class OlimlarListAPIView(ListAPIView):
     queryset = Olimlar.objects.all().order_by("id")
     serializer_class = OlimlarSerializer
+    permission_classes = [AllowAny]
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name']
+    search_fields = ['fullname']
 
 
 class KutubxonaListAPIView(ListAPIView):
@@ -28,10 +30,11 @@ class KutubxonaListAPIView(ListAPIView):
     serializer_class = KutubxonaSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['title']
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny]
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def kutubxona_detail(request, pk):
     try:
         kitob = Kutubxona.objects.get(pk=pk)
@@ -49,6 +52,7 @@ def kutubxona_detail(request, pk):
     return Response(serializer_data)
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def muzeylar_list(request):
     muzeylar = Muzeylar.objects.all().order_by("id")
     serializer = MuzeylarSerializer(muzeylar, many=True)
@@ -64,6 +68,7 @@ def muzeylar_list(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def muzeylar_detail(request, pk):
     try:
         muzey = Muzeylar.objects.get(pk=pk)

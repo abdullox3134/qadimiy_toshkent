@@ -8,6 +8,7 @@ User = get_user_model()
 class Archaeology(models.Model):
     title = models.CharField(max_length=60)
     context = RichTextField(blank=True, null=True)
+    image = models.FileField(upload_to='image', blank=True, null=True)
     video = models.FileField(upload_to='videos/', blank=True, null=True)
     link = models.URLField(blank=True, null=True)
     users = models.ManyToManyField(User, related_name='liked_kanferensiyalar', blank=True)
@@ -37,9 +38,7 @@ class Items(models.Model):
     link = models.URLField(blank=True, null=True)
     users = models.ManyToManyField(User, related_name='like_kanferensiyalar', blank=True)
     view_count = models.PositiveIntegerField(default=0, blank=True, null=True)
-    # like = models.IntegerField(default=0, blank=True, null=True)
-    # password_image = models.FileField(upload_to='images', blank=True, null=True)
-    # downloads = models.IntegerField(default=0, blank=True, null=True)
+    image = models.FileField(upload_to='image', blank=True, null=True)
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
 
@@ -66,6 +65,7 @@ class ItemsPicture(models.Model):
 class News(models.Model):
     title = models.CharField(max_length=60)
     context = RichTextField(blank=True, null=True)
+    image = models.FileField(upload_to='image', blank=True, null=True)
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
 
@@ -79,5 +79,4 @@ class News(models.Model):
 
 class NewsPicture(models.Model):
     image = models.FileField(upload_to='image', blank=True, null=True)
-    # link = models.URLField(verbose_name='link', blank=True, null=True)
     news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_picture', )
