@@ -80,11 +80,14 @@ def news_list(request):
     serializer = NewsSerializers(comments, many=True)
     serializer_url = serializer.data
     for obj_url in serializer_url:
+        # Process image field for News model
+        if obj_url.get('image'):
+            obj_url['image'] = request.build_absolute_uri(obj_url['image'])
+        # Process image fields for NewsPicture model
         for obj in obj_url['news_picture']:
             if obj.get('image'):
                 obj['image'] = request.build_absolute_uri(obj['image'])
     return Response(serializer_url)
-
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -97,12 +100,17 @@ def news_detail(request, pk):
     serializer = NewsSerializers(about)
     serializer_data = serializer.data
 
-    # Tasvir URL'larini absolyut URL'ga aylantirish
+    # Process image field for News model
+    if serializer_data.get('image'):
+        serializer_data['image'] = request.build_absolute_uri(serializer_data['image'])
+
+    # Process image fields for NewsPicture model
     if 'news_picture' in serializer_data:
         for obj in serializer_data['news_picture']:
             if obj.get('image'):
                 obj['image'] = request.build_absolute_uri(obj['image'])
 
     return Response(serializer_data)
+
 
 

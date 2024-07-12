@@ -9,6 +9,6 @@ urlpatterns = [
     path('arxiv/<int:pk>/', archaeology_detail),
     path('items/', items_list),
     path('items/<int:pk>/', items_detail),
-    path('news', news_list),
+    path('news/', news_list),
     path('news/<int:pk>/', news_detail),
 ]
