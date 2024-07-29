@@ -15,7 +15,7 @@ class ArchaeologySerializers(serializers.ModelSerializer):
     class Meta:
         model = Archaeology
         fields = ['id', 'title_uz', 'title_en', 'context_uz', 'context_en', 'image',
-                  'video', 'link', 'create', 'update', 'archaeologyPicture']
+                  'video', 'video_link', 'link', 'create', 'update', 'archaeologyPicture']
 
     def get_archaeologyPicture(self, obj):
         request = self.context.get('request')
@@ -39,7 +39,7 @@ class ItemsSerializers(serializers.ModelSerializer):
         model = Items
         fields = ['id',
                   'title_uz', 'title_en', 'context_uz', 'context_en', 'image',
-                  'video', 'create', 'update', 'picture_items', ]
+                  'video', 'video_link', 'create', 'update', 'picture_items', ]
 
     def get_picture_items(self, obj):
         request = self.context.get('request')

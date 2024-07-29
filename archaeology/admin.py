@@ -36,7 +36,7 @@ class items_Picture(admin.TabularInline):
 class itemsAdmin(admin.ModelAdmin):
     list_display = ('title',)
     inlines = [items_Picture]
-    fields = ('context_uz', 'context_en', 'title_uz', 'title_en', 'image', 'video', 'link',)
+    fields = ('context_uz', 'context_en', 'title_uz', 'title_en', 'image', 'video', 'video_link', 'link',)
 
 
 
@@ -55,5 +55,5 @@ class ArchaeologyAdmin(admin.ModelAdmin):
     list_display = ('title',)
     # inlines = [Archaeology_Video, Archaeology_Picture]
     inlines = [Archaeology_Picture]
-    fields = ('context_uz', 'context_en', 'title_uz', 'title_en', 'image', 'video', 'link',)
+    fields = ('context_uz', 'context_en', 'title_uz', 'title_en', 'image', 'video', 'video_link', 'link',)
 
