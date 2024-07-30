@@ -153,7 +153,7 @@ WSGI_APPLICATION = 'Conf.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'toshkent',
+        'NAME': 'db_toshkent',
         'USER': 'toshkent_user',
         'PASSWORD': 'toshkent_password',
         'HOST': 'localhost',
