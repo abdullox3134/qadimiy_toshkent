@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'ckeditor',
+    'ckeditor_uploader'
     'django_filters',
 
     # my apps
