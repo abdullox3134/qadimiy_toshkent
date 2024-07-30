@@ -162,7 +162,7 @@ DATABASES = {
         'NAME': 'toshkent',
         'USER': 'toshkent_user',
         'PASSWORD': 'toshkent_password',
-        'HOST': 'db_toshkent',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
