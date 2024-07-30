@@ -1,5 +1,5 @@
 from modeltranslation.translator import TranslationOptions, register
-from outher.models import Scientists, ElectronicBooks, Address, About, FileBook
+from outher.models import About, Muzeylar, Kutubxona, Olimlar
 
 
 @register(About)
@@ -7,22 +7,18 @@ class AboutTranslationOptions(TranslationOptions):
     fields = ('title', 'description',)
 
 
-@register(Scientists)
-class ScientistsTranslationOptions(TranslationOptions):
-    fields = ('name', 'description',)
+@register(Olimlar)
+class OlimlarTranslationOptions(TranslationOptions):
+    fields = ('fullname', 'pasition',)
 
 
-@register(ElectronicBooks)
-class ElectronicTranslationOptions(TranslationOptions):
-    fields = ('name',)
-
-
-@register(FileBook)
-class FileBookTranslationOptions(TranslationOptions):
+@register(Kutubxona)
+class KutubxonaTranslationOptions(TranslationOptions):
     fields = ('title',)
 
-@register(Address)
-class AddressTranslationOptions(TranslationOptions):
-    fields = ('adres',)
+
+@register(Muzeylar)
+class MuzeylarTranslationOptions(TranslationOptions):
+    fields = ('title',)
 
 

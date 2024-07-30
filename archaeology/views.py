@@ -1,38 +1,18 @@
-from django.http import Http404
-from rest_framework.decorators import api_view
-from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-
-from django.shortcuts import get_object_or_404
 from rest_framework import status
 
 from archaeology.filters import CategoryFilter
-from archaeology.models import Region, Archaeology, Items, News, Video, Picture
-from archaeology.serializers import RegionSerializers, ArchaeologySerializers, ArchaeologyLikeSerializer, \
-    ItemsSerializers, ItemsLikeSerializer, NewsSerializers, VideoSerializers, PictureSerializers
+from archaeology.models import Archaeology, Items, News
+from archaeology.serializers import ArchaeologySerializers, \
+    ItemsSerializers, NewsSerializers
 
 
 @api_view(['GET'])
-def region_list(request):
-    comments = Region.objects.all().order_by("id")
-    serializer = RegionSerializers(comments, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def region_detail(request, pk):
-    try:
-        comment = Region.objects.get(pk=pk)
-    except Archaeology.DoesNotExist:
-        raise Http404
-
-    serializer = RegionSerializers(comment)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
+@permission_classes([AllowAny])
 def archaeology_list(request):
     paginator = PageNumberPagination()
     paginator.page_size = 10
@@ -48,6 +28,7 @@ def archaeology_list(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def archaeology_detail(request, pk):
     try:
         archaeology = Archaeology.objects.get(pk=pk)
@@ -61,34 +42,8 @@ def archaeology_detail(request, pk):
     return Response(serializer.data)
 
 
-class ArchaeologyLikeAPIView(RetrieveUpdateAPIView):
-    queryset = Archaeology.objects.all()
-    serializer_class = ArchaeologyLikeSerializer
-
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        user = request.user
-
-        if user.is_authenticated:
-            existing_like = instance.users.filter(id=user.id).exists()
-            if not existing_like:
-                instance.users.add(user)
-                instance.like += 1
-            else:
-                instance.users.remove(user)
-                instance.like -= 1
-            instance.save()
-            serializer = self.get_serializer(instance)
-            return Response(serializer.data)
-        else:
-            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
-
-    def get_object(self):
-        pk = self.kwargs.get('pk')
-        return get_object_or_404(Archaeology, pk=pk)
-
-
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def items_list(request):
     paginator = PageNumberPagination()
     paginator.page_size = 20
@@ -104,6 +59,7 @@ def items_list(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def items_detail(request, pk):
     try:
         items = Items.objects.get(pk=pk)
@@ -117,102 +73,44 @@ def items_detail(request, pk):
     return Response(serializer.data)
 
 
-class ItemsLikeAPIView(RetrieveUpdateAPIView):
-    queryset = Items.objects.all()
-    serializer_class = ItemsLikeSerializer
-
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        user = request.user
-
-        if user.is_authenticated:
-            existing_like = instance.users.filter(id=user.id).exists()
-            if not existing_like:
-                instance.users.add(user)
-                instance.like += 1
-            else:
-                instance.users.remove(user)
-                instance.like -= 1
-            instance.save()
-            serializer = self.get_serializer(instance)
-            return Response(serializer.data)
-        else:
-            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
-
-    def get_object(self):
-        pk = self.kwargs.get('pk')
-        return get_object_or_404(Items, pk=pk)
-
-
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def news_list(request):
     comments = News.objects.all().order_by("id")
     serializer = NewsSerializers(comments, many=True)
     serializer_url = serializer.data
     for obj_url in serializer_url:
+        # Process image field for News model
+        if obj_url.get('image'):
+            obj_url['image'] = request.build_absolute_uri(obj_url['image'])
+        # Process image fields for NewsPicture model
         for obj in obj_url['news_picture']:
             if obj.get('image'):
                 obj['image'] = request.build_absolute_uri(obj['image'])
-        for obj in obj_url['news_video']:
-            if obj.get('video'):
-                obj['video'] = request.build_absolute_uri(obj['video'])
-
     return Response(serializer_url)
 
-
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def news_detail(request, pk):
     try:
-        comment = News.objects.get(pk=pk)
+        about = News.objects.get(pk=pk)
     except News.DoesNotExist:
-        raise Http404
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    serializer = NewsSerializers(comment)
-    return Response(serializer.data)
+    serializer = NewsSerializers(about)
+    serializer_data = serializer.data
 
+    # Process image field for News model
+    if serializer_data.get('image'):
+        serializer_data['image'] = request.build_absolute_uri(serializer_data['image'])
 
-@api_view(['GET'])
-def video_list(request):
-    comments = Video.objects.all().order_by("id")
-    serializer = VideoSerializers(comments, many=True)
-    serializer_url = serializer.data
-    for obj_url in serializer_url:
-        for obj in obj_url['sub_video']:
-            if obj.get('video'):
-                obj['video'] = request.build_absolute_uri(obj['video'])
-
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def video_detail(request, pk):
-    try:
-        comment = Video.objects.get(pk=pk)
-    except Video.DoesNotExist:
-        raise Http404
-
-    serializer = VideoSerializers(comment)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def picture_list(request):
-    comments = Picture.objects.all().order_by("id")
-    serializer = PictureSerializers(comments, many=True)
-    serializer_url = serializer.data
-    for obj_url in serializer_url:
-        for obj in obj_url['sub_picture']:
+    # Process image fields for NewsPicture model
+    if 'news_picture' in serializer_data:
+        for obj in serializer_data['news_picture']:
             if obj.get('image'):
                 obj['image'] = request.build_absolute_uri(obj['image'])
-    return Response(serializer.data)
+
+    return Response(serializer_data)
 
 
-@api_view(['GET'])
-def picture_detail(request, pk):
-    try:
-        comment = Picture.objects.get(pk=pk)
-    except Picture.DoesNotExist:
-        raise Http404
 
-    serializer = PictureSerializers(comment)
-    return Response(serializer.data)

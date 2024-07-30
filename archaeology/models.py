@@ -5,26 +5,13 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class Region(models.Model):
-    title = models.CharField(max_length=60)
-    longitude = models.FloatField()
-    latitude = models.FloatField()
-
-    class Meta:
-        verbose_name = 'Region'
-        verbose_name_plural = 'Regions'
-
-    def __str__(self):
-        return self.title or ''
-
-
 class Archaeology(models.Model):
-    title = models.CharField(max_length=60, blank=True, null=True)
+    title = models.CharField(max_length=60)
     context = RichTextField(blank=True, null=True)
-    like = models.IntegerField(default=0, blank=True, null=True)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE, related_name='region',blank=True, null=True)
-    password_image = models.FileField(upload_to='image', blank=True, null=True)
-    downloads = models.IntegerField(default=0, blank=True, null=True)
+    image = models.FileField(upload_to='image', blank=True, null=True)
+    video = models.FileField(upload_to='videos/', blank=True, null=True)
+    video_link = models.URLField(blank=True, null=True)
+    link = models.URLField(blank=True, null=True)
     users = models.ManyToManyField(User, related_name='liked_kanferensiyalar', blank=True)
     view_count = models.PositiveIntegerField(default=0, blank=True, null=True)
     create = models.DateTimeField(auto_now_add=True)
@@ -35,21 +22,12 @@ class Archaeology(models.Model):
         verbose_name_plural = 'Archaeology'
 
     def __str__(self):
-        return self.title or ''
-
-
-class ArchaeologyVideo(models.Model):
-    video = models.FileField(upload_to='video', blank=True, null=True)
-    link = models.URLField(verbose_name='link', blank=True, null=True)
-    title = models.CharField(max_length=60)
-    name = models.ForeignKey(Archaeology, on_delete=models.CASCADE, related_name='archaeologyVideo'
-                             ,blank=True, null=True)
+        return self.title
 
 
 class ArchaeologyPicture(models.Model):
     image = models.FileField(upload_to='image', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
-    title = models.CharField(max_length=60)
     name = models.ForeignKey(Archaeology, on_delete=models.CASCADE, related_name='archaeologyPicture',
                              blank=True, null=True)
 
@@ -57,11 +35,12 @@ class ArchaeologyPicture(models.Model):
 class Items(models.Model):
     title = models.CharField(max_length=60)
     context = RichTextField(blank=True, null=True)
-    like = models.IntegerField(default=0, blank=True, null=True)
+    video = models.FileField(upload_to='videos/', blank=True, null=True)
+    video_link = models.URLField(blank=True, null=True)
+    link = models.URLField(blank=True, null=True)
     users = models.ManyToManyField(User, related_name='like_kanferensiyalar', blank=True)
-    password_image = models.FileField(upload_to='images', blank=True, null=True)
-    downloads = models.IntegerField(default=0, blank=True, null=True)
     view_count = models.PositiveIntegerField(default=0, blank=True, null=True)
+    image = models.FileField(upload_to='image', blank=True, null=True)
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
 
@@ -76,20 +55,19 @@ class Items(models.Model):
 class ItemsVideo(models.Model):
     video = models.FileField(upload_to='video', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
-    title = models.CharField(max_length=60)
     item = models.ForeignKey(Items, on_delete=models.CASCADE, related_name='video_items')
 
 
 class ItemsPicture(models.Model):
     image = models.FileField(upload_to='image', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
-    title = models.CharField(max_length=60)
     item = models.ForeignKey(Items, on_delete=models.CASCADE, related_name='picture_items')
 
 
 class News(models.Model):
     title = models.CharField(max_length=60)
     context = RichTextField(blank=True, null=True)
+    image = models.FileField(upload_to='image', blank=True, null=True)
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
 
@@ -101,49 +79,6 @@ class News(models.Model):
         return self.title or ''
 
 
-class NewsVideo(models.Model):
-    video = models.FileField(upload_to='video', blank=True, null=True)
-    link = models.URLField(verbose_name='link', blank=True, null=True)
-    title = models.CharField(max_length=60)
-    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_video',)
-
-
 class NewsPicture(models.Model):
     image = models.FileField(upload_to='image', blank=True, null=True)
-    link = models.URLField(verbose_name='link', blank=True, null=True)
-    title = models.CharField(max_length=60)
-    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_picture',)
-
-
-class Video(models.Model):
-    title = models.CharField(max_length=60)
-
-    class Meta:
-        verbose_name = 'Video'
-        verbose_name_plural = 'Video'
-
-    def __str__(self):
-        return self.title or ''
-
-
-class SubVideo(models.Model):
-    video = models.FileField(upload_to='video', blank=True, null=True)
-    link = models.URLField(verbose_name='link', blank=True, null=True)
-    videos = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='sub_video',)
-
-
-class Picture(models.Model):
-    title = models.CharField(max_length=60)
-
-    class Meta:
-        verbose_name = 'Picture'
-        verbose_name_plural = 'Picture'
-
-    def __str__(self):
-        return self.title or ''
-
-
-class SubPicture(models.Model):
-    image = models.FileField(upload_to='image', blank=True, null=True)
-    link = models.URLField(verbose_name='link', blank=True, null=True)
-    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, related_name='sub_picture',)
+    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name='news_picture', )
