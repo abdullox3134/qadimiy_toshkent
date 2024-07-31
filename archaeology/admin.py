@@ -16,7 +16,7 @@ class NewsPictureTabularInline(admin.TabularInline):
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('title_uz',)
     # inlines = [NewsVideoTabularInline, NewsPictureTabularInline]
     inlines = [NewsPictureTabularInline]
     fields = ['title_uz', 'title_en', 'context_uz', 'context_en', 'image',]
@@ -34,7 +34,7 @@ class items_Picture(admin.TabularInline):
 
 @admin.register(Items)
 class itemsAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('title_uz',)
     inlines = [items_Picture]
     fields = ('context_uz', 'context_en', 'title_uz', 'title_en', 'image', 'video', 'video_link', 'link',)
 
@@ -52,7 +52,7 @@ class Archaeology_Picture(admin.TabularInline):
 
 @admin.register(Archaeology)
 class ArchaeologyAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('title_uz',)
     # inlines = [Archaeology_Video, Archaeology_Picture]
     inlines = [Archaeology_Picture]
     fields = ('context_uz', 'context_en', 'title_uz', 'title_en', 'image', 'video', 'video_link', 'link',)
