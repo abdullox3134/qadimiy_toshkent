@@ -82,6 +82,9 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     'language-code',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+
 GOOGLE_REDIRECT_URL = 'https://example.com/accounts/google/login/callback/'  # or your actual callback URL
 REST_AUTH_REGISTER_SERIALIZERS = {
     'LOGIN_SERIALIZER': 'path.to.your.custom.LoginSerializer',
