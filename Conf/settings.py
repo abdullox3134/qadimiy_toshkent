@@ -86,6 +86,14 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8017",
+    "http://localhost:8017",
+    # Boshqa ruxsat etilgan manzillarni bu yerga qo'shing
+    "http://subdomain.qadimiytoshkent.uz",
+    "https://subdomain.qadimiytoshkent.uz",
+]
+
 
 GOOGLE_REDIRECT_URL = 'https://example.com/accounts/google/login/callback/'  # or your actual callback URL
 REST_AUTH_REGISTER_SERIALIZERS = {
