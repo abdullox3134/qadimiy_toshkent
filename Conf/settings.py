@@ -76,6 +76,8 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
+CSRF_TRUSTED_ORIGINS = ['https://subdomain.qadimiytoshkent.uz']
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
@@ -165,7 +167,7 @@ DATABASES = {
         'NAME': 'toshkent',
         'USER': 'toshkent_user',
         'PASSWORD': 'toshkent_password',
-        'HOST': 'localhost',
+        'HOST': '10.254.0.2',
         'PORT': '5432',
     }
 }
