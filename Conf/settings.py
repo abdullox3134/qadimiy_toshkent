@@ -76,7 +76,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://subdomain.qadimiytoshkent.uz']
+CSRF_TRUSTED_ORIGINS = ['http://subdomain.qadimiytoshkent.uz']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
