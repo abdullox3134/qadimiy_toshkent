@@ -78,7 +78,7 @@ MIDDLEWARE = [
 
 CSRF_TRUSTED_ORIGINS = ['http://subdomain.qadimiytoshkent.uz']
 
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'language-code',
