@@ -79,8 +79,7 @@ MIDDLEWARE = [
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8017', 'http://localhost:8017', 'http://subdomain.qadimiytoshkent.uz']
 CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
-# CSRF_COOKIE_DOMAIN = 'subdomain.qadimiytoshkent.uz'
-CSRF_COOKIE_DOMAIN = 'farhod-dev.uz'
+CSRF_COOKIE_DOMAIN = 'subdomain.qadimiytoshkent.uz'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -163,24 +162,24 @@ WSGI_APPLICATION = 'Conf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'toshkent',
-#         'USER': 'toshkent_user',
-#         'PASSWORD': 'toshkent_password',
-#         'HOST': '10.254.0.2',
-#         'PORT': '5432',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'toshkent',
+        'USER': 'toshkent_user',
+        'PASSWORD': 'toshkent_password',
+        'HOST': '10.254.0.2',
+        'PORT': '5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
