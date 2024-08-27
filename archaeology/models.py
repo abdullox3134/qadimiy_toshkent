@@ -10,6 +10,7 @@ class Archaeology(models.Model):
     context = RichTextField(blank=True, null=True)
     image = models.FileField(upload_to='image', blank=True, null=True)
     video = models.FileField(upload_to='videos/', blank=True, null=True)
+    pasport = models.FileField(upload_to='pasport/', blank=True, null=True)
     video_link = models.URLField(blank=True, null=True)
     link = models.URLField(blank=True, null=True)
     users = models.ManyToManyField(User, related_name='liked_kanferensiyalar', blank=True)
@@ -26,6 +27,7 @@ class Archaeology(models.Model):
 
 
 class ArchaeologyPicture(models.Model):
+    title = models.CharField(max_length=200, blank=True, null=True)
     image = models.FileField(upload_to='image', blank=True, null=True)
     link = models.URLField(verbose_name='link', blank=True, null=True)
     name = models.ForeignKey(Archaeology, on_delete=models.CASCADE, related_name='archaeologyPicture',

@@ -6,7 +6,7 @@ from archaeology.models import Archaeology, Items, News, ArchaeologyPicture, \
 class ArchaeologyPictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArchaeologyPicture
-        fields = ['id', 'image', 'link', ]
+        fields = ['id', 'title', 'image', 'link', ]
 
 
 class ArchaeologySerializers(serializers.ModelSerializer):
@@ -14,7 +14,7 @@ class ArchaeologySerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Archaeology
-        fields = ['id', 'title_uz', 'title_en', 'context_uz', 'context_en', 'image',
+        fields = ['id', 'title_uz', 'title_en', 'context_uz', 'context_en', 'pasport', 'image',
                   'video', 'video_link', 'link', 'create', 'update', 'archaeologyPicture']
 
     def get_archaeologyPicture(self, obj):
